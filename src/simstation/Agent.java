@@ -115,16 +115,16 @@ public abstract class Agent implements Runnable, Serializable {
         for(int i=0; i<steps; i++) {
             if (heading == Heading.NORTH)
             {
-                this.yc = (this.yc + 1) % 250;
+                this.yc = (this.yc + 1 + 250) % 250;
             }
             else if (heading == Heading.SOUTH) {
-                this.yc = (this.yc - 1) % 250;
+                this.yc = (this.yc - 1 + 250) % 250;
             }
             else if (heading == Heading.WEST) {
-                this.xc = (this.xc - 1) % 250;
+                this.xc = (this.xc - 1 + 250) % 250;
             }
             else {
-                this.xc = (this.xc + 1) % 250;
+                this.xc = (this.xc + 1 + 250) % 250;
             }
             world.changed();
         }
