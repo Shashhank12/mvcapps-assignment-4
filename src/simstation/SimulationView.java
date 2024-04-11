@@ -2,14 +2,20 @@ package simstation;
 
 import mvc.*;
 
+import java.awt.*;
+
 public class SimulationView extends View {
     public SimulationView(Simulation simulation) {
         super(simulation);
     }
 
     @Override
-    public void update() {
+    public void paintComponent(Graphics gc) {
+        super.paintComponent(gc);
         Simulation simulation = (Simulation) model;
-        repaint();
+        for (Agent agent : simulation.getAgents()) {
+            gc.setColor(Color.WHITE);
+            gc.fillRect(agent.getXc(), agent.getYc(), 5, 5);
+        }
     }
 }

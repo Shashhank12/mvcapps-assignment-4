@@ -21,7 +21,7 @@ public class Simulation extends Model {
         this.console = new Console();
         this.state = 0; // not started
     }
-    public void add(Agent a) {
+    public void addAgent(Agent a) {
         agents.add(a);
         a.setSimulation(this);
     }
@@ -106,6 +106,11 @@ public class Simulation extends Model {
         timer.cancel();
         timer.purge();
     }
+
+    public List<Agent> getAgents() {
+        return agents;
+    }
+
     private class ClockUpdater extends TimerTask {
         public void run() {
             clock++;

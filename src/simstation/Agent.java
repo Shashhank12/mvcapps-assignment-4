@@ -10,7 +10,7 @@ import java.io.Serializable;
 public abstract class Agent implements Runnable, Serializable {
     private static final long serialVersionUID = -5715552370025859766L;
     String name;
-    Heading heading;
+    protected Heading heading;
     int xc;
     int yc;
     boolean suspended;
@@ -24,6 +24,12 @@ public abstract class Agent implements Runnable, Serializable {
         this.stopped = false;
         this.myThread = null;
         this.heading = Heading.random();
+        xc = Utilities.rng.nextInt(400);
+        yc = Utilities.rng.nextInt(400);
+    }
+
+    public Agent() {
+        this("Agent");
     }
 
     public void setSimulation(Simulation sim) {
@@ -99,6 +105,14 @@ public abstract class Agent implements Runnable, Serializable {
     }
 
     public abstract void update();
+
+    public int getXc() {
+        return xc;
+    }
+
+    public int getYc() {
+        return yc;
+    }
 
     public void move(int steps) {
         for(int i=0; i<steps; i++) {
