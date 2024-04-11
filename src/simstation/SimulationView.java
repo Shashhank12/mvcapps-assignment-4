@@ -14,8 +14,10 @@ public class SimulationView extends View {
         super.paintComponent(gc);
         Simulation simulation = (Simulation) model;
         for (Agent agent : simulation.getAgents()) {
-            gc.setColor(Color.WHITE);
-            gc.fillRect(agent.getXc(), agent.getYc(), 5, 5);
+            if (!agent.isStopped()) {
+                gc.setColor(Color.WHITE);
+                gc.fillRect(agent.getXc(), agent.getYc(), 5, 5);
+            }
         }
     }
 }
