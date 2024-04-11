@@ -8,6 +8,13 @@ public class Prisoner extends Agent {
 
     Strategy strategy;
 
+    public boolean cooperate() {
+        return strategy.cooperate();
+    }
+
     @Override
     public void update() {}
+
+    public void updateFitness(int amt) {}
+
 }
