@@ -14,6 +14,7 @@ public class PrisonerSimulation extends Simulation {
         for (int i = 0; i < 20; i++) {
             Prisoner p = new Prisoner();
             p.strategy = strategies[i%4];
+            p.strategy.myPrisoner = p;
             addAgent(p);
         }
     }
@@ -42,10 +43,11 @@ public class PrisonerSimulation extends Simulation {
         }
 
         String[] stats = new String[4];
-        stats[0] = "Cooperate Average: " + meanFitness[0][0] / meanFitness[0][1];
-        stats[1] = "Cheat Average: " + meanFitness[1][0] / meanFitness[1][1];
-        stats[2] = "Tit4Tat Average: " + meanFitness[2][0] / meanFitness[2][1];
-        stats[3] = "RandomlyCooperate Average: " + meanFitness[3][0] / meanFitness[3][1];
+        stats[0] = "Cooperate Average: " + (meanFitness[0][1] == 0 ? 0 : meanFitness[0][0] / meanFitness[0][1]);
+        stats[1] = "Cheat Average: " + (meanFitness[1][1] == 0 ? 0 : meanFitness[1][0] / meanFitness[1][1]);
+        stats[2] = "Tit4Tat Average: " + (meanFitness[2][1] == 0 ? 0 : meanFitness[2][0] / meanFitness[2][1]);
+        stats[3] = "RandomlyCooperate Average: " + (meanFitness[3][1] == 0 ? 0 : meanFitness[3][0] / meanFitness[3][1]);
+
 
         return stats;
     }

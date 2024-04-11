@@ -34,13 +34,12 @@ public class Prisoner extends Agent {
                 updateFitness(1);
                 other.updateFitness(1);
             }
-            partnerCheated = other.cooperate();
+            partnerCheated = otherCooperation;
         }
     }
 
     public void updateFitness(int amt) {
         fitness += amt;
-        System.out.println(fitness);
     }
 
 }
