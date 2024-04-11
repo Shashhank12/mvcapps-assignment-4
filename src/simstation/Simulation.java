@@ -1,12 +1,10 @@
 package simstation;
 
 import mvc.Model;
+import mvc.Utilities;
 
 import java.util.*;
 
-/**
- * @author priyankagoel
- */
 public class Simulation extends Model {
     private static final long serialVersionUID = -9221800546606875714L;
     transient private Timer timer;
@@ -92,7 +90,8 @@ public class Simulation extends Model {
     }
 
     public String[] getStats() {
-        return null;
+
+        return new String[] {"Agents: " + agents.size(), "Clock: " + clock};
     }
 
     public synchronized void println(String msg) {
