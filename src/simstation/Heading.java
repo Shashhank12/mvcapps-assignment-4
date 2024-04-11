@@ -2,8 +2,21 @@ package simstation;
 
 import mvc.Utilities;
 
-public class Heading {
-    public static double random() {
-        return Utilities.rng.nextDouble() * 360;
+public enum Heading {
+    NORTH, EAST, SOUTH, WEST;
+    public static Heading parse(String heading) {
+        if(heading.equalsIgnoreCase("north")) return NORTH;
+        if(heading.equalsIgnoreCase("west")) return WEST;
+        if(heading.equalsIgnoreCase("south")) return SOUTH;
+        if(heading.equalsIgnoreCase("east")) return EAST;
+        Utilities.error("Invalid heading" + heading);
+        return null;
+    }
+    public static Heading random() {
+        int luck = Utilities.rng.nextInt(4);
+        if (luck == 0) return NORTH;
+        if(luck == 1) return SOUTH;
+        if(luck == 2) return EAST;
+        return WEST;
     }
 }

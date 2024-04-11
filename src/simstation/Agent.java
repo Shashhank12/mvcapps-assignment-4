@@ -4,33 +4,110 @@ import mvc.Utilities;
 
 import java.io.Serializable;
 
+/**
+ * @author priyankagoel
+ */
 public abstract class Agent implements Runnable, Serializable {
+    private static final long serialVersionUID = -5715552370025859766L;
     String name;
-
-    public double heading;
-    int xc, yc;
-    boolean suspended = false;
-    boolean stopped = false;
-    Thread myThread;
+    Heading heading;
+    int xc;
+    int yc;
+    boolean suspended;
+    boolean stopped;
+    transient protected Thread myThread;
     Simulation world;
 
-    public void run() {
-        update();
+    public Agent(String name) {
+        this.name = name;
+        this.suspended = false;
+        this.stopped = false;
+        this.myThread = null;
+        this.heading = Heading.random();
     }
 
-    public void start() {}
+    public void setSimulation(Simulation sim) {
+        this.world = sim;
+    }
 
-    public void suspend() {}
+    public synchronized String toString() {
+        String result = name;
+        if (stopped) result += " (stopped)";
+        else if (suspended) result += " (suspended)";
+        else result += " (running)";
+        return result;
+    }
+    public String getName() { return name; }
+    public synchronized void onStart() {
+    }
+    public synchronized void onInterrupted() {
+    }
+    public synchronized void onExit() {
+    }
+    public synchronized void stop() { stopped = true; }
+    public synchronized boolean isStopped() { return stopped; }
+    public synchronized void suspend() {
+        suspended = true;
+    }
+    public synchronized boolean isSuspended() {
+        return suspended;
+    }
+    public synchronized void resume() {
+        notify();
+    }
 
-    public void resume() {}
+    public synchronized void start() {
+        onStart();
+    }
 
-    public void stop() {}
+    // wait for me to die
+    public synchronized void join() {
+        try {
+            if (myThread != null) myThread.join();
+        } catch (InterruptedException e) {
+            world.println(e.getMessage());
+        }
+    }
+
+    // wait for notification (i.e. resume) if I'm not stopped and I am suspended
+    private synchronized void checkSuspended() {
+        try {
+            while(!stopped && suspended) {
+                onInterrupted();
+                wait();
+                suspended = false;
+            }
+        } catch (InterruptedException e) {
+            world.println(e.getMessage());
+        }
+    }
+    public void run() {
+        myThread = Thread.currentThread();// catch my thread
+//        onInterrupted();
+        start();
+        while(!isStopped()) {
+            try {
+                update();
+                Thread.sleep(20);
+                checkSuspended();
+            } catch (Exception e) {
+                this.world.println(e.getMessage());
+            }
+        }
+        onExit();
+        this.world.println(name + "stopped");
+    }
 
     public abstract void update();
 
     public void move(int steps) {
-        for (int i = 0; i < steps; i++) {
+        for(int i=0; i<steps; i++) {
+            this.xc++;
+            this.yc++;
             world.changed();
         }
     }
+
+
+
 }
