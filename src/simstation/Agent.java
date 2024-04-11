@@ -4,9 +4,6 @@ import mvc.Utilities;
 
 import java.io.Serializable;
 
-/**
- * @author priyankagoel
- */
 public abstract class Agent implements Runnable, Serializable {
     private static final long serialVersionUID = -5715552370025859766L;
     String name;
@@ -24,8 +21,8 @@ public abstract class Agent implements Runnable, Serializable {
         this.stopped = false;
         this.myThread = null;
         this.heading = Heading.random();
-        xc = Utilities.rng.nextInt(400);
-        yc = Utilities.rng.nextInt(400);
+        xc = Utilities.rng.nextInt(400) + 1;
+        yc = Utilities.rng.nextInt(400) + 1;
     }
 
     public Agent() {
@@ -116,12 +113,21 @@ public abstract class Agent implements Runnable, Serializable {
 
     public void move(int steps) {
         for(int i=0; i<steps; i++) {
-            this.xc++;
-            this.yc++;
+            heading = Heading.random();
+            if (heading == Heading.NORTH)
+            {
+                this.yc = (this.yc + 1) % 250;
+            }
+            else if (heading == Heading.SOUTH) {
+                this.yc = (this.yc - 1) % 250;
+            }
+            else if (heading == Heading.WEST) {
+                this.xc = (this.xc - 1) % 250;
+            }
+            else {
+                this.xc = (this.xc + 1) % 250;
+            }
             world.changed();
         }
     }
-
-
-
 }
