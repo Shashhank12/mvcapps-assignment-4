@@ -13,7 +13,7 @@ public abstract class Agent implements Runnable, Serializable {
     boolean suspended;
     boolean stopped;
     transient protected Thread myThread;
-    Simulation world;
+    protected Simulation world;
 
     public Agent(String name) {
         this.name = name;
@@ -113,7 +113,6 @@ public abstract class Agent implements Runnable, Serializable {
 
     public void move(int steps) {
         for(int i=0; i<steps; i++) {
-            heading = Heading.random();
             if (heading == Heading.NORTH)
             {
                 this.yc = (this.yc + 1) % 250;
