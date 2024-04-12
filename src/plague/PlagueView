@@ -10,6 +10,7 @@ public class PlagueView extends SimulationView {
     public PlagueView(Simulation simulation) {
         super(simulation);
     }
+
     @Override
     public void paintComponent(Graphics gc) {
         super.paintComponent(gc);
