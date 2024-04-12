@@ -8,7 +8,7 @@ import java.util.*;
 public class Simulation extends Model {
     private static final long serialVersionUID = -9221800546606875714L;
     transient private Timer timer;
-    private int clock = 0;
+    protected int clock = 0;
     Console console;
     List<Agent> agents;
 
