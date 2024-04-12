@@ -94,7 +94,7 @@ public abstract class Agent implements Runnable, Serializable {
                 Thread.sleep(20);
                 checkSuspended();
             } catch (Exception e) {
-                this.world.println(e.getMessage());
+                e.printStackTrace(this.world.console.stdout);
             }
         }
         onExit();
@@ -112,19 +112,20 @@ public abstract class Agent implements Runnable, Serializable {
     }
 
     public void move(int steps) {
+        int fieldSize = 250;
         for(int i=0; i<steps; i++) {
             if (heading == Heading.NORTH)
             {
-                this.yc = (this.yc + 1 + 250) % 250;
+                this.yc = (this.yc + 1 + fieldSize) % fieldSize;
             }
             else if (heading == Heading.SOUTH) {
-                this.yc = (this.yc - 1 + 250) % 250;
+                this.yc = (this.yc - 1 + fieldSize) % fieldSize;
             }
             else if (heading == Heading.WEST) {
-                this.xc = (this.xc - 1 + 250) % 250;
+                this.xc = (this.xc - 1 + fieldSize) % fieldSize;
             }
             else {
-                this.xc = (this.xc + 1 + 250) % 250;
+                this.xc = (this.xc + 1 + fieldSize) % fieldSize;
             }
             world.changed();
         }
