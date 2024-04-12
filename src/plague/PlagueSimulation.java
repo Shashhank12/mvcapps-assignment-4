@@ -30,7 +30,8 @@ public class PlagueSimulation extends Simulation {
         int infectedAmount = 0;
         for (Agent a: getAgents())
         {
-            if (a instanceof Plague p) {
+            if (a instanceof Plague) {
+                Plague p = (Plague) a;
                 if (p.infected) {
                     infectedAmount++;
                 }
