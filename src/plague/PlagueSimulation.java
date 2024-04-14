@@ -43,7 +43,7 @@ public class PlagueSimulation extends Simulation {
     @Override
     public String[] getStats()
     {
-        float infectedPercent = (float) getInfectedAmount() / getAgents().size();
-        return new String[] {"Agents: " + getAgents().size(),"Clock: " + clock, "% Infected: " + infectedPercent};
+        float infectedPercent = ((float) getInfectedAmount() / getAgents().size()) * 100;
+        return new String[] {"Agents: " + getAgents().size(),"Clock: " + clock, "% Infected: " + String.format("%.2f", infectedPercent)};
     }
 }
