@@ -4,6 +4,9 @@ import mvc.Utilities;
 
 import java.io.Serializable;
 
+import static mvc.AppPanel.FRAME_HEIGHT;
+import static mvc.AppPanel.FRAME_WIDTH;
+
 public abstract class Agent implements Runnable, Serializable {
     private static final long serialVersionUID = -5715552370025859766L;
     String name;
@@ -15,14 +18,22 @@ public abstract class Agent implements Runnable, Serializable {
     transient protected Thread myThread;
     protected Simulation world;
 
+    public int getWidth() {
+        return FRAME_WIDTH / 2;
+    }
+
+    public int getHeight() {
+        return FRAME_HEIGHT;
+    }
+
     public Agent(String name) {
         this.name = name;
         this.suspended = false;
         this.stopped = false;
         this.myThread = null;
         this.heading = Heading.random();
-        xc = Utilities.rng.nextInt(400) + 1;
-        yc = Utilities.rng.nextInt(400) + 1;
+        xc = Utilities.rng.nextInt(getWidth()) + 1;
+        yc = Utilities.rng.nextInt(getHeight()) + 1;
     }
 
     public Agent() {
@@ -112,20 +123,23 @@ public abstract class Agent implements Runnable, Serializable {
     }
 
     public void move(int steps) {
-        int fieldSize = 250;
         for(int i=0; i<steps; i++) {
             if (heading == Heading.NORTH)
             {
-                this.yc = (this.yc + 1 + fieldSize) % fieldSize;
+                int height = getHeight();
+                this.yc = (this.yc + 1 + height) % height;
             }
             else if (heading == Heading.SOUTH) {
-                this.yc = (this.yc - 1 + fieldSize) % fieldSize;
+                int height = getHeight();
+                this.yc = (this.yc - 1 + height) % height;
             }
             else if (heading == Heading.WEST) {
-                this.xc = (this.xc - 1 + fieldSize) % fieldSize;
+                int width = getWidth();
+                this.xc = (this.xc - 1 + width) % width;
             }
             else {
-                this.xc = (this.xc + 1 + fieldSize) % fieldSize;
+                int width = getWidth();
+                this.xc = (this.xc + 1 + width) % width;
             }
             world.changed();
         }

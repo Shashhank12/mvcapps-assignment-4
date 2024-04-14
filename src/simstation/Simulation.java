@@ -9,8 +9,8 @@ public class Simulation extends Model {
     private static final long serialVersionUID = -9221800546606875714L;
     transient private Timer timer;
     protected int clock = 0;
-    Console console;
-    List<Agent> agents;
+    transient Console console;
+    protected List<Agent> agents;
 
     // 0: not started, 1: running, 2: suspended, 3: stopped
     private int state;
