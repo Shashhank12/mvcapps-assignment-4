@@ -5,12 +5,13 @@ import simstation.Agent;
 
 public class Plague extends Agent {
     boolean infected;
+    boolean resistance;
     @Override
     public void update() {
         int steps = Utilities.rng.nextInt(10) + 1;
         move(steps);
         Plague other = (Plague) world.getNeighbor(this, 10);
-        if (other != null && other.infected && !this.infected) {
+        if (other != null && other.infected && !this.infected && !this.resistance) {
             int infected = Utilities.rng.nextInt(2);
             if (infected == 1)
             {
