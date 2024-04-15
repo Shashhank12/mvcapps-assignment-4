@@ -2,6 +2,7 @@ package plague;
 
 import mvc.Utilities;
 import simstation.Agent;
+import simstation.Heading;
 
 public class Plague extends Agent {
     boolean infected;
@@ -9,6 +10,7 @@ public class Plague extends Agent {
     @Override
     public void update() {
         int steps = Utilities.rng.nextInt(10) + 1;
+        heading = Heading.random();
         move(steps);
         Plague other = (Plague) world.getNeighbor(this, 10);
         if (other != null && other.infected && !this.infected && !this.resistance) {
