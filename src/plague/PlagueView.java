@@ -16,7 +16,8 @@ public class PlagueView extends SimulationView {
         super.paintComponent(gc);
         Simulation simulation = (Simulation) model;
         for (Agent a : simulation.getAgents()) {
-            if (a instanceof Plague p && !a.isStopped()) {
+            if (a instanceof Plague && !a.isStopped()) {
+                Plague p = (Plague) a;
                 if (p.infected) {
                     gc.setColor(Color.RED);
                     gc.fillRect(a.getXc(), a.getYc(), 5, 5);
