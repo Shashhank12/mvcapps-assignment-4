@@ -16,10 +16,15 @@ public class PlagueSimulation extends Simulation {
             if (infected == 1)
             {
                 int resisted = Utilities.rng.nextInt(100);
-                p.infected = resisted != 0 && resisted != 1;
+                if (resisted == 0 || resisted == 1)
+                {
+                    p.infected = false;
+                    p.resistance = true;
+                }
             }
             else {
                 p.infected = false;
+                p.resistance = false;
             }
             addAgent(p);
         }
