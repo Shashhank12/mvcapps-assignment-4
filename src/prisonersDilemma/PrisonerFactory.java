@@ -1,7 +1,6 @@
 package prisonersDilemma;
 
 import mvc.Model;
-import mvc.View;
 import simstation.SimStationFactory;
 
 public class PrisonerFactory extends SimStationFactory {
