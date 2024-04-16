@@ -1,7 +1,6 @@
 package simstation;
 
 import mvc.Model;
-import mvc.Utilities;
 
 import java.util.*;
 
@@ -14,10 +13,15 @@ public class Simulation extends Model {
 
     // 0: not started, 1: running, 2: suspended, 3: stopped
     private int state;
+    
+    private int width;
+    private int height;
     public Simulation() {
         this.agents = new ArrayList<>();
         this.console = new Console();
         this.state = 0; // not started
+        this.width = getWidth();
+        this.height = getHeight();
     }
     public void addAgent(Agent a) {
         agents.add(a);
@@ -104,6 +108,22 @@ public class Simulation extends Model {
     private void stopTimer() {
         timer.cancel();
         timer.purge();
+    }
+    
+    public synchronized int getWidth() {
+        return width;
+    }
+
+    public synchronized void setWidth(int width) {
+        this.width = width;
+    }
+
+    public synchronized int getHeight() {
+        return height;
+    }
+
+    public synchronized void setHeight(int height) {
+        this.height = height;
     }
 
     public List<Agent> getAgents() {

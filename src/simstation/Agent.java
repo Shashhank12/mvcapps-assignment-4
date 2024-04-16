@@ -1,11 +1,9 @@
 package simstation;
 
+import mvc.AppPanel;
 import mvc.Utilities;
 
 import java.io.Serializable;
-
-import static mvc.AppPanel.FRAME_HEIGHT;
-import static mvc.AppPanel.FRAME_WIDTH;
 
 public abstract class Agent implements Runnable, Serializable {
     private static final long serialVersionUID = -5715552370025859766L;
@@ -19,11 +17,17 @@ public abstract class Agent implements Runnable, Serializable {
     protected Simulation world;
 
     public int getWidth() {
-        return FRAME_WIDTH / 2;
+        if (world != null) {
+            return ((Simulation) world).getWidth();
+        }
+        return AppPanel.FRAME_WIDTH;
     }
 
     public int getHeight() {
-        return FRAME_HEIGHT;
+        if (world != null) {
+            return ((Simulation) world).getHeight();
+        }
+        return AppPanel.FRAME_HEIGHT;
     }
 
     public Agent(String name) {
@@ -32,16 +36,21 @@ public abstract class Agent implements Runnable, Serializable {
         this.stopped = false;
         this.myThread = null;
         this.heading = Heading.random();
-        xc = Utilities.rng.nextInt(getWidth()) + 1;
-        yc = Utilities.rng.nextInt(getHeight()) + 1;
+        computeLocation();
     }
 
+    public void computeLocation() {
+        xc = Utilities.rng.nextInt((int)getWidth() + 1);
+        yc = Utilities.rng.nextInt((int)getHeight() + 1);
+    }
+    
     public Agent() {
         this("Agent");
     }
 
     public void setSimulation(Simulation sim) {
         this.world = sim;
+        computeLocation();
     }
 
     public synchronized String toString() {
@@ -52,12 +61,11 @@ public abstract class Agent implements Runnable, Serializable {
         return result;
     }
     public String getName() { return name; }
-    public synchronized void onStart() {
-    }
-    public synchronized void onInterrupted() {
-    }
+    
+    public synchronized void onStart() {}
+    public synchronized void onInterrupted() {}
     public synchronized void onExit() {
-    }
+}
     public synchronized void stop() { stopped = true; }
     public synchronized boolean isStopped() { return stopped; }
     public synchronized void suspend() {

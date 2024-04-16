@@ -4,8 +4,10 @@ import mvc.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 
-public class SimulationPanel extends AppPanel {
+public class SimulationPanel extends AppPanel implements ComponentListener {
     JButton startButton = new JButton("Start");
     JButton suspendButton = new JButton("Suspend");
     JButton resumeButton = new JButton("Resume");
@@ -22,7 +24,7 @@ public class SimulationPanel extends AppPanel {
             p.add(button);
             controlPanel.add(p);
         }
-
+        this.view.addComponentListener(this);
     }
 
     public static void main(String[] args) {
@@ -30,4 +32,22 @@ public class SimulationPanel extends AppPanel {
         AppPanel panel = new SimulationPanel(factory);
         panel.display();
     }
+
+    @Override
+    public void componentResized(ComponentEvent e) {
+        Component component = e.getComponent();
+        Rectangle window = component.getBounds();
+        Simulation simulation = (Simulation) getModel();
+        simulation.setWidth(window.width);
+        simulation.setHeight(window.height);
+    }
+
+    @Override
+    public void componentMoved(ComponentEvent e) {}
+
+    @Override
+    public void componentShown(ComponentEvent e) {}
+
+    @Override
+    public void componentHidden(ComponentEvent e) {}
 }
