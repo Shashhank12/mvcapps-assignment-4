@@ -12,14 +12,19 @@ public class PlagueSimulation extends Simulation {
     public void populate() {
         for (int i = 0; i < 20; i++) {
             Plague p = new Plague();
-            int infected = Utilities.rng.nextInt(2);
+            int infected = Utilities.rng.nextInt(2); // 50% chance to be infected based on Virulence
             if (infected == 1)
             {
-                int resisted = Utilities.rng.nextInt(100);
-                p.infected = resisted != 0 && resisted != 1;
+                int resisted = Utilities.rng.nextInt(100); // 2% chance to resist based on Resistance
+                if (resisted == 0 || resisted == 1)
+                {
+                    p.infected = false;
+                    p.resistance = true;
+                }
             }
             else {
-                p.infected = false;
+                p.infected = true;
+                p.resistance = false;
             }
             addAgent(p);
         }
