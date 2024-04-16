@@ -17,22 +17,6 @@ public class Bird extends Agent {
     }
 
     @Override
-    public int getWidth() {
-        if (world != null) {
-            return ((FlockingSimulation) world).getWidth();
-        }
-        return super.getWidth();
-    }
-
-    @Override
-    public int getHeight() {
-        if (world != null) {
-            return ((FlockingSimulation) world).getHeight();
-        }
-        return super.getHeight();
-    }
-
-    @Override
     public void update() {
         Bird partner = (Bird)world.getNeighbor(this, 50);
         if (partner != null) {
