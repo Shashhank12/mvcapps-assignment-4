@@ -52,7 +52,7 @@ public class SimulationPanel extends AppPanel implements ComponentListener {
             Thread t = new Thread(it.next());
             t.start(); // this will call Agent.run (see below)
         }
-        componentResized(new ComponentEvent(this, ComponentEvent.COMPONENT_RESIZED));
+        componentResized(new ComponentEvent(this.view, ComponentEvent.COMPONENT_RESIZED));
     }
 
     @Override
