@@ -59,6 +59,7 @@ public class Simulation extends Model {
             a.stop();
         }
         stopTimer();
+        changed();
         this.state = 3; // stopped
     }
     public Agent getNeighbor(Agent agent, double radius) {
