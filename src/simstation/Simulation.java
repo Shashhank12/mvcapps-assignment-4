@@ -130,6 +130,10 @@ public class Simulation extends Model {
         return agents;
     }
 
+    public Iterator<Agent> iterator() {
+        return agents.iterator();
+    }
+
     private class ClockUpdater extends TimerTask {
         public void run() {
             clock++;

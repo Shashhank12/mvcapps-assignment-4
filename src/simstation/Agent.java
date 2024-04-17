@@ -105,8 +105,8 @@ public abstract class Agent implements Runnable, Serializable {
     }
     public void run() {
         myThread = Thread.currentThread();// catch my thread
-//        onInterrupted();
-        start();
+        checkSuspended();
+        onStart();
         while(!isStopped()) {
             try {
                 update();
@@ -132,6 +132,9 @@ public abstract class Agent implements Runnable, Serializable {
 
     public void move(int steps) {
         for(int i=0; i<steps; i++) {
+            if (getHeight() == 0 || getWidth() == 0) {
+                return;
+            }
             if (heading == Heading.NORTH)
             {
                 int height = getHeight();
